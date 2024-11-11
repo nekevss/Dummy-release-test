@@ -9,7 +9,15 @@ start with an an initial release using a git tag.
 
 # General Notes:
 
+## v0.0.1 - v0.0.2
+
+Oops forgot to push the tags
+
+## v0.0.3
+
 The artifacts didn't go through, but that may be a problem with forgetting to add them.
 
 Furthermore, Windows was broken due to not adding .exe to the end of the file, so trying
 to add a wildcard on there.
+
+
