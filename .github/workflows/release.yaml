@@ -44,17 +44,17 @@ jobs:
         include:
         - build: linux
           os: ubuntu-latest
-          rust: stable,
+          rust: stable
           asset_name: test-linux-amd64
           binary: dummy-release-test
         - build: macos
           os: macos-latest
-          rust: stable,
+          rust: stable
           asset_name: test-macos-amd64
           binary: dummy-release-test
         - build: macos
           os: windows-latest
-          rust: stable,
+          rust: stable
           asset_name: test-windows-amd64.exe
           binary: dummy-release-test.exe
     runs-on: ${{ matrix.os }}
