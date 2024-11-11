@@ -54,7 +54,7 @@ jobs:
           echo "Tag name from github.ref_name: ${{  github.ref_name }}"         
       - uses: taiki-e/create-gh-release-action@v1
         with:
-          changelog: CHANGELOG.md
+          # changelog: CHANGELOG.md
           token: ${{ secrets.GITHUB_TOKEN }}
   
   
