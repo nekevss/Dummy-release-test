@@ -24,3 +24,10 @@ to add a wildcard on there.
 
 This one errored out because I accidentally left commas after "stable" in the Rust version
 and I foolishly tried to commit --amend it, but that's not a good idea with tags.
+
+## v0.0.6
+
+There's an issue with the files being downloaded from the download action and how they are
+being handled by the release-action.
+
+Both appear to recommend to tar the files, so let's see if that works.
