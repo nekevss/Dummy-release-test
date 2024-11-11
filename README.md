@@ -37,3 +37,12 @@ Both appear to recommend to tar the files, so let's see if that works.
 Not currently convinced that the previous methods have been the best idea. Even if they were
 to work. Currently the files are not a tarball. Found some actions from `taiki-e` and thought
 that they may be worth the try.
+
+## v0.0.10
+
+HOLY HELL, taiki-e is a genius. Not entirely sure what black magic is there. I'll have to take
+a look at the scripts, but we are published with compression.
+
+Now it's just time to get the changelog working.
+
+I realized that I wasn't sending my local commits up to remote, so let's first test that.
