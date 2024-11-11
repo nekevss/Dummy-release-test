@@ -31,3 +31,9 @@ There's an issue with the files being downloaded from the download action and ho
 being handled by the release-action.
 
 Both appear to recommend to tar the files, so let's see if that works.
+
+## v0.0.8
+
+Not currently convinced that the previous methods have been the best idea. Even if they were
+to work. Currently the files are not a tarball. Found some actions from `taiki-e` and thought
+that they may be worth the try.

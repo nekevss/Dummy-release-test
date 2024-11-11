@@ -34,56 +34,12 @@ jobs:
         run: cargo clippy --all-features --all-targets
       - name: Run tests
         run: cargo test --all-features --all-targets
-
-  build_release:
-    name: Build releases
-    needs: ["run_ci"]
-    strategy:
-      fail-fast: true
-      matrix:
-        include:
-        - build: linux
-          os: ubuntu-latest
-          rust: stable
-          asset_name: test-linux-amd64
-          binary: dummy-release-test
-        - build: macos
-          os: macos-latest
-          rust: stable
-          asset_name: test-macos-amd64
-          binary: dummy-release-test
-        - build: macos
-          os: windows-latest
-          rust: stable
-          asset_name: test-windows-amd64.exe
-          binary: dummy-release-test.exe
-    runs-on: ${{ matrix.os }}
-    steps: 
-      - uses: actions/checkout@v4
-      - uses: dtolnay/rust-toolchain@master
-        with:
-          toolchain: ${{ matrix.rust }}
-      - name: Build release
-        run: cargo build --verbose --release
-      - name: Tar the build
-        run: tar -cvf target/release/${{ matrix.binary }}
-      - name: Upload release for ${{ matrix.os }}
-        uses: actions/upload-artifact@v4
-        with:
-          path: target/release/${{ matrix.binary }}.tar
-          name: ${{ matrix.asset_name }}.tar
-  
-  publish_release:
-    name: Publish the releases
-    needs: ["build_release"]
+    
+  create_release:
+    name: Create the Release
     runs-on: ubuntu-latest
-    steps: 
+    steps:
       - uses: actions/checkout@v4
-      - name: Retrieve artifacts
-        uses: actions/download-artifact@v4
-        with:
-          path: dist
-          pattern: test-*
       - name: Generate changelog
         uses: orhun/git-cliff-action@v4
         with:
@@ -95,11 +51,104 @@ jobs:
         run: |
           echo "Tag name from GITHUB_REF_NAME: $GITHUB_REF_NAME"
           echo "Tag name from github.ref_name: ${{  github.ref_name }}"         
-
-      - name: Publish
-        uses: ncipollo/release-action@v1
+      - uses: taiki-e/create-gh-release-action@v1
         with:
-          tag: ${{ github.ref_name }}
+          changelog: BODY.md
+          token: ${{ secrets.GITHUB_TOKEN }}
+  
+  
+  upload_assets: 
+    name: Build and Release
+    needs: create_release
+    strategy:
+      fail-fast: true
+      matrix:
+        include:
+        - build: linux
+          os: ubuntu-latest
+          target: x86_64-unknown-linux-gnu
+        - build: macos
+          os: macos-latest
+          target: x86_64-apple-darwin
+        - build: windows
+          os: windows-latest
+          target: x86_64-pc-windows-msvc
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: taiki-e/upload-rust-binary-action@v1
+        with:
+          bin: dummy-release-test
+          target: ${{ matrix.target }}
+          tar: all
+          zip: windows
+          token: ${{ secrets.GITHUB_TOKEN }}
+ 
+  # build_release:
+    # name: Build releases
+    # needs: ["run_ci"]
+    # strategy:
+      # fail-fast: true
+      # matrix:
+        # include:
+        # - build: linux
+          # os: ubuntu-latest
+          # rust: stable
+          # asset_name: test-linux-amd64
+          # binary: dummy-release-test
+        # - build: macos
+          # os: macos-latest
+          # rust: stable
+          # asset_name: test-macos-amd64
+          # binary: dummy-release-test
+        # - build: macos
+          # os: windows-latest
+          # rust: stable
+          # asset_name: test-windows-amd64.exe
+          # binary: dummy-release-test.exe
+    # runs-on: ${{ matrix.os }}
+    # steps: 
+      # - uses: actions/checkout@v4
+      # - uses: dtolnay/rust-toolchain@master
+        # with:
+          # toolchain: ${{ matrix.rust }}
+      # - name: Build release
+        # run: cargo build --verbose --release
+      # - name: Tar the build
+        # run: tar -cvf target/release/${{ matrix.binary }}
+      # - name: Upload release for ${{ matrix.os }}
+        # uses: actions/upload-artifact@v4
+        # with:
+          # path: target/release/${{ matrix.binary }}.tar
+          # name: ${{ matrix.asset_name }}.tar
+  # 
+  # publish_release:
+    # name: Publish the releases
+    # needs: ["build_release"]
+    # runs-on: ubuntu-latest
+    # steps: 
+      # - uses: actions/checkout@v4
+      # - name: Retrieve artifacts
+        # uses: actions/download-artifact@v4
+        # with:
+          # path: dist
+          # pattern: test-*
+      # - name: Generate changelog
+        # uses: orhun/git-cliff-action@v4
+        # with:
+          # config: cliff.toml
+          # args: --current --strip header
+        # env:
+          # OUTPUT: BODY.md
+      # - name: Print tag name
+        # run: |
+          # echo "Tag name from GITHUB_REF_NAME: $GITHUB_REF_NAME"
+          # echo "Tag name from github.ref_name: ${{  github.ref_name }}"         
+# 
+      # - name: Publish
+        # uses: ncipollo/release-action@v1
+        # with:
+          # tag: ${{ github.ref_name }}
           # TODO: Is there a better way to do this?
-          artifacts: "test-linux-amd64.tar,test-macos-amd64.tar,test-windows-amd64.exe.tar"
-          bodyFile: BODY.md
+          # artifacts: "test-linux-amd64.tar,test-macos-amd64.tar,test-windows-amd64.exe.tar"
+          # bodyFile: BODY.md
