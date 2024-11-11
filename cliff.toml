@@ -1,6 +1,10 @@
 # git-cliff ~ configuration file
 # https://git-cliff.org/docs/configuration
 
+[remote.github]
+owner = "nekevss"
+repo = "dummy-release-test"
+
 [changelog]
 # template for the changelog header
 header = """
