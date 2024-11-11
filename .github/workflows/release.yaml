@@ -58,7 +58,7 @@ jobs:
       - name: Upload release for ${{ matrix.os }}
         uses: actions/upload-artifact@v4
         with:
-          path: target/release/dummy-release-test
+          path: target/release/dummy-release-test*
           name: dummy-release-test-${{ matrix.os }}
   
   publish_release:
@@ -76,10 +76,15 @@ jobs:
           args: --latest --strip header
         env:
           OUTPUT: BODY.md
+      - name: Print tag name
+        run: |
+          echo "Tag name from GITHUB_REF_NAME: $GITHUB_REF_NAME"
+          echo "Tag name from github.ref_name: ${{  github.ref_name }}"         
 
       - name: Publish
         uses: ncipollo/release-action@v1
         with:
           # TODO: Better option than ref_name?
           tag: ${{ github.ref_name }}
+          artifacts: target/release/
           bodyFile: BODY.md
