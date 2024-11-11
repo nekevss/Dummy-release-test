@@ -41,20 +41,25 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - name: Generate changelog
         uses: orhun/git-cliff-action@v4
+        id: git-cliff
         with:
           config: cliff.toml
-          args: --latest --strip header
+          args: --verbose --latest --strip header
         env:
-          OUTPUT: BODY.md
+          OUTPUT: CHANGELOG.md
       - name: Print tag name
         run: |
           echo "Tag name from GITHUB_REF_NAME: $GITHUB_REF_NAME"
           echo "Tag name from github.ref_name: ${{  github.ref_name }}"         
+      - name: Print the changelog
+        run: cat "${{ steps.git-cliff.outputs.changelog }}"
       - uses: taiki-e/create-gh-release-action@v1
         with:
-          changelog: BODY.md
+          changelog: CHANGELOG.md
           allow-missing-changelog: true
           token: ${{ secrets.GITHUB_TOKEN }}
   
