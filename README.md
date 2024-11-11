@@ -20,4 +20,7 @@ The artifacts didn't go through, but that may be a problem with forgetting to ad
 Furthermore, Windows was broken due to not adding .exe to the end of the file, so trying
 to add a wildcard on there.
 
+## v0.0.5
 
+This one errored out because I accidentally left commas after "stable" in the Rust version
+and I foolishly tried to commit --amend it, but that's not a good idea with tags.
