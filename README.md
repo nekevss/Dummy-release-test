@@ -46,3 +46,9 @@ a look at the scripts, but we are published with compression.
 Now it's just time to get the changelog working.
 
 I realized that I wasn't sending my local commits up to remote, so let's first test that.
+
+## v0.0.11
+
+I forgot to change the CHANGELOG.md -> BODY.md
+
+I really think I should probably be echoing body too just to ensure that it's there, but let's see.
