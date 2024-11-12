@@ -34,21 +34,34 @@ Both appear to recommend to tar the files, so let's see if that works.
 
 ## v0.0.8
 
-Not currently convinced that the previous methods have been the best idea. Even if they were
-to work. Currently the files are not a tarball. Found some actions from `taiki-e` and thought
-that they may be worth the try.
+Not currently convinced that the previous methods have been the best
+idea. Even if they were to work. Currently the files are not a tarball.
+Found some actions from `taiki-e` and thought that they may be worth the
+try.
 
 ## v0.0.10
 
-HOLY HELL, taiki-e is a genius. Not entirely sure what black magic is there. I'll have to take
-a look at the scripts, but we are published with compression.
+HOLY HELL, taiki-e is a genius. Not entirely sure what black magic is
+there. I'll have to take a look at the scripts, but we are published
+with compression.
 
 Now it's just time to get the changelog working.
 
-I realized that I wasn't sending my local commits up to remote, so let's first test that.
+I realized that I wasn't sending my local commits up to remote, so let's
+first test that.
 
 ## v0.0.11
 
 I forgot to change the CHANGELOG.md -> BODY.md
 
-I really think I should probably be echoing body too just to ensure that it's there, but let's see.
+I really think I should probably be echoing body too just to ensure that
+it's there, but let's see.
+
+## v0.0.14
+
+At this point, everything more or less works. Although, the best answer
+for properly building out the change log has yet to be determined, but
+there is a path forward, so that's nice.
+
+Now it's time to make sure the `-rc` workflow will work without
+triggering a regular release.
