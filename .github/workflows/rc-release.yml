@@ -90,6 +90,6 @@ jobs:
           tar: all
           zip: windows
           leading-dir: true
-          archive: $bin-$tag
+          bin-leading-dir: $bin-$tag
           token: ${{ secrets.GITHUB_TOKEN }}
 
