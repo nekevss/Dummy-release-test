@@ -90,6 +90,6 @@ jobs:
           tar: all
           zip: windows
           leading-dir: true
-          bin-leading-dir: $bin-$tag
+          bin-leading-dir: dummy-release-test-${{ github.ref_name }}
           token: ${{ secrets.GITHUB_TOKEN }}
 
