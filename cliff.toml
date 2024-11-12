@@ -61,7 +61,5 @@ filter_commits = false
 topo_order = false
 # sort the commits inside sections by oldest/newest order
 sort_commits = "newest"
-# skip tags
-skip_tags = "beta|alpha"
 # ignore tags
-ignore_tags = "rc[0-9]+"
+ignore_tags = "-[0-9a-zA-Z]+"
