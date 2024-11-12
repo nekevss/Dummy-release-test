@@ -1,3 +1,4 @@
+# TODO
 name: Release
 permissions:
   "contents": "write"
@@ -6,7 +7,7 @@ on:
   workflow_dispatch:
   push:
     tags:
-      - "v[0-9]+.[0-9]+.[0-9]+"
+      - "v[0-9]+.[0-9]+.[0-9]+-rc[0-9]+"
 
 jobs:
   run_ci:
@@ -48,7 +49,7 @@ jobs:
         id: git-cliff
         with:
           config: cliff.toml
-          args: --verbose --latest --strip header
+          args: --verbose --unreleased --strip header
         env:
           OUTPUT: CHANGELOG.md
       - name: Print tag name
@@ -62,7 +63,6 @@ jobs:
           changelog: CHANGELOG.md
           allow-missing-changelog: true
           token: ${{ secrets.GITHUB_TOKEN }}
-  
   
   upload_assets: 
     name: Build and Release
@@ -90,3 +90,4 @@ jobs:
           tar: all
           zip: windows
           token: ${{ secrets.GITHUB_TOKEN }}
+
